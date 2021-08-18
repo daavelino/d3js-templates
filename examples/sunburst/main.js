@@ -1,0 +1,25 @@
+import * as d3 from "https://cdn.skypack.dev/d3@7";
+import { gen_sunburst } from './modules/sunburst.mjs';
+
+const settings = {
+  "html_layout": {
+    "title":"Sunburst",  // The main HTML title.
+    "svg": {
+      "id": "sunburst_chart",
+      "width":975,
+      "height":975,
+      "font": "9px sans-serif"
+    },
+    "tspan":{
+      "opacity":0.7
+    },
+    "rect":{
+      "fill-opacity":0.6
+    },
+  },
+  "data_url":"./data/flare-2.json" // It can also be a web address.
+};
+
+gen_sunburst(settings);
+
+
