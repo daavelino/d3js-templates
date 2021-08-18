@@ -35,7 +35,7 @@ function gen_cpack(settings) {
       return "url(" + this.href + ")";
   };
 
-  const svg = d3.select("svg");
+  const svg = d3.select(`#${svg_id}`);
 
   // Chart construction:
   d3.json(data_url).then(function(data) {
