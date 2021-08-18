@@ -61,7 +61,7 @@ function gen_icicle(settings) {
       .text(d => d.data.name);
     
     text.append("tspan")
-      .attr("fill-opacity", settings["html_layout"]["tspan"]["opacity"])
+      .attr("fill-opacity", tspan_fill_opacity)
       .text(d => ` ${format(d.value)}`);
     
     cell.append("title")
