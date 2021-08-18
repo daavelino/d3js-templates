@@ -20,22 +20,24 @@ function gen_icicle(settings) {
     .attr("viewBox",[0, 0, svg_width, svg_height])
     .style("font", svg_font);
   
-  let svg = d3.select("svg");
+  const svg = d3.select("svg");
   
   d3.json(settings["data_url"]).then(function(data) {
   
-    let partition = data => d3.partition()
+    const partition = data => d3.partition()
       .size([svg_height, svg_width])
       .padding(1)
       (d3.hierarchy(data)
         .sum(d => d.value)
         .sort((a, b) => b.height - a.height || b.value - a.value));
 
-    let color = d3.scaleOrdinal(d3.quantize(d3.interpolateRainbow, data.children.length + 1));
-    let root = partition(data);
-    let format = d3.format(",d");
+    const color = d3.scaleOrdinal(d3.quantize(d3.interpolateRainbow, data.children.length + 1));
+
+    const root = partition(data);
+
+    const format = d3.format(",d");
   
-    let cell = svg
+    const cell = svg
       .selectAll("g")
       .data(root.descendants())
       .join("g")
@@ -51,7 +53,7 @@ function gen_icicle(settings) {
         return color(d.data.name);
       });
     
-    let text = cell.filter(d => (d.x1 - d.x0) > 16).append("text")
+    const text = cell.filter(d => (d.x1 - d.x0) > 16).append("text")
       .attr("x", 4)
       .attr("y", 13);
     
