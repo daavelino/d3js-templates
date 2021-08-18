@@ -8,8 +8,6 @@ function gen_sunburst(settings) {
   let svg_height = settings["html_layout"]["svg"]["height"];
   let svg_font = settings["html_layout"]["svg"]["font"];
   let html_title = settings["html_layout"]["title"]; 
-  let rect_fill_opacity = settings["html_layout"]["rect"]["fill-opacity"];
-  let tspan_fill_opacity = settings["html_layout"]["tspan"]["fill-opacity"];
   let data_url = settings["data_url"];
 
   let radius = Math.min(svg_width, svg_height) / 2;

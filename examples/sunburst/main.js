@@ -10,12 +10,6 @@ const settings = {
       "height":975,
       "font": "9px sans-serif"
     },
-    "tspan":{
-      "opacity":0.7
-    },
-    "rect":{
-      "fill-opacity":0.6
-    },
   },
   "data_url":"./data/flare-2.json" // It can also be a web address.
 };
