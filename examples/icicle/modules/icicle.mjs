@@ -10,6 +10,7 @@ function gen_icicle(settings) {
   let html_title = settings["html_layout"]["title"]; 
   let rect_fill_opacity = settings["html_layout"]["rect"]["fill-opacity"];
   let tspan_fill_opacity = settings["html_layout"]["tspan"]["fill-opacity"];
+  let data_url = settings["data_url"];
 
   d3.select("title").text(html_title);
 
@@ -23,7 +24,7 @@ function gen_icicle(settings) {
   const svg = d3.select("svg");
 
   // Chart construction:
-  d3.json(settings["data_url"]).then(function(data) {
+  d3.json(data_url).then(function(data) {
   
     const color = d3.scaleOrdinal(d3.quantize(d3.interpolateRainbow, data.children.length + 1));
 
