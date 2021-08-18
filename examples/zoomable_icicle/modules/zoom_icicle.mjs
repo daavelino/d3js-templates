@@ -25,6 +25,38 @@ function gen_zoom_icicle(settings) {
   // Chart construction:
   d3.json(settings["data_url"]).then(function(data) {
 
+    function clicked(event, p) {
+      focus = focus === p ? p = p.parent : p;
+
+      root.each(d => d.target = {
+        x0: (d.x0 - p.x0) / (p.x1 - p.x0) * svg_height,
+        x1: (d.x1 - p.x0) / (p.x1 - p.x0) * svg_height,
+        y0: d.y0 - p.y0,
+        y1: d.y1 - p.y0
+      });
+
+
+    const t = cell.transition().duration(750)
+      .attr("transform", d => `translate(${d.target.y0},${d.target.x0})`);
+
+    rect.transition(t).attr("height", d => rectHeight(d.target));
+    text.transition(t).attr("fill-opacity", d => labelVisible(d.target));
+    tspan.transition(t).attr("fill-opacity", d => labelVisible(d.target) * tspan_fill_opacity);
+    }
+	
+    function rectHeight(d) {
+      return d.x1 - d.x0 - Math.min(1, (d.x1 - d.x0) / 2);
+    }
+
+    function labelVisible(d) {
+      return d.y1 <= svg_width && d.y0 >= 0 && d.x1 - d.x0 > 16;
+    }
+	
+
+    const color = d3.scaleOrdinal(d3.quantize(d3.interpolateRainbow, data.children.length + 1));
+
+    const format = d3.format(",d");
+
     const partition = data => d3.partition()
       .size([svg_height, svg_width])
       .padding(1)
@@ -32,12 +64,9 @@ function gen_zoom_icicle(settings) {
         .sum(d => d.value)
         .sort((a, b) => b.height - a.height || b.value - a.value));
 
-    const color = d3.scaleOrdinal(d3.quantize(d3.interpolateRainbow, data.children.length + 1));
-
     const root = partition(data);
     let focus = root;
 
-    const format = d3.format(",d");
 
     const cell = svg
       .selectAll("g")
@@ -74,33 +103,6 @@ function gen_zoom_icicle(settings) {
     cell.append("title")
       .text(d => `${d.ancestors().map(d => d.data.name).reverse().join("/")}\n${format(d.value)}`);
 
-
-    function clicked(event, p) {
-      focus = focus === p ? p = p.parent : p;
-
-      root.each(d => d.target = {
-        x0: (d.x0 - p.x0) / (p.x1 - p.x0) * svg_height,
-        x1: (d.x1 - p.x0) / (p.x1 - p.x0) * svg_height,
-        y0: d.y0 - p.y0,
-        y1: d.y1 - p.y0
-      });
-
-      const t = cell.transition().duration(750)
-        .attr("transform", d => `translate(${d.target.y0},${d.target.x0})`);
-
-      rect.transition(t).attr("height", d => rectHeight(d.target));
-      text.transition(t).attr("fill-opacity", d => labelVisible(d.target));
-      tspan.transition(t).attr("fill-opacity", d => labelVisible(d.target) * tspan_fill_opacity);
-    }
-	
-    function rectHeight(d) {
-      return d.x1 - d.x0 - Math.min(1, (d.x1 - d.x0) / 2);
-    }
-
-    function labelVisible(d) {
-      return d.y1 <= svg_width && d.y0 >= 0 && d.x1 - d.x0 > 16;
-    }
-	
 
     return svg.node();
 
