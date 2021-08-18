@@ -21,9 +21,14 @@ function gen_icicle(settings) {
     .style("font", svg_font);
   
   const svg = d3.select("svg");
-  
+
+  // Chart construction:
   d3.json(settings["data_url"]).then(function(data) {
   
+    const color = d3.scaleOrdinal(d3.quantize(d3.interpolateRainbow, data.children.length + 1));
+
+    const format = d3.format(",d");
+
     const partition = data => d3.partition()
       .size([svg_height, svg_width])
       .padding(1)
@@ -31,11 +36,7 @@ function gen_icicle(settings) {
         .sum(d => d.value)
         .sort((a, b) => b.height - a.height || b.value - a.value));
 
-    const color = d3.scaleOrdinal(d3.quantize(d3.interpolateRainbow, data.children.length + 1));
-
     const root = partition(data);
-
-    const format = d3.format(",d");
   
     const cell = svg
       .selectAll("g")
