@@ -5,7 +5,7 @@ var settings = {
   "html_layout": {
     "title":"Zoomable Icicle",  // The main HTML title.
     "svg": {
-      "id": "icicle_chart",
+      "id": "zoom_icicle_chart",
       "width":975,
       "height":600,
       "font": "10px sans-serif"
