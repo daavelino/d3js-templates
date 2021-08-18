@@ -1,7 +1,7 @@
 import * as d3 from "https://cdn.skypack.dev/d3@7";
 import { gen_icicle } from './modules/icicle.mjs';
 
-var settings = {
+const settings = {
   "html_layout": {
     "title":"Icicle",  // The main HTML title.
     "svg": {
