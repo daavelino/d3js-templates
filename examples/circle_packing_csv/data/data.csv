@@ -1,0 +1,10 @@
+root,actor,resource,account,action,counting
+Total,Daniel,localhost,admin,get,1
+Total,Seth,website,seth,get,1
+Total,Daniel,website,daniel,post,1
+Total,Eve,website,admin,post,1
+Total,Eve,website,admin,get,1
+Total,Eve,website,admin,put,1
+Total,Eve,localhost,admin,put,1
+Total,Eve,website,admin,put,1
+Total,Daniel,website,admin,put,1
