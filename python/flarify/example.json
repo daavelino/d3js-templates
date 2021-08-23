@@ -1,0 +1,25 @@
+{
+  "Germany":{ 
+    "Berlin": {
+      "Lichtenberg":6,
+      "Charlottenburg":8,
+      "Friedrichshain":2
+    },
+    "Frankfurt am Main": {
+      "Mitte":10,
+      "Altstadt":3,
+      "Hochst":3,
+      "Kronberg":5,
+      "Messe":2
+    }
+  },
+  "Brazil":{
+    "Rio de Janeiro": {
+      "Centro": 2,
+      "Lapa": 8,
+      "Pavuna": 2,
+      "Botafogo": 2,
+      "Copacabana": 2 
+    } 
+  }
+}
