@@ -3,11 +3,10 @@ import { bar_chart } from './modules/bar_chart.mjs';
 
 const settings = {
   "html_layout": {
-    "title":"Bar Chart",  // The main HTML title.
+    "div_id": "#bar_chart", // the div id where you want to plug the chart.
     "svg": {
-      "id": "bar_chart",
-      "width":975,
-      "height":975,
+      "width":650,
+      "height":650,
       "font": "10px sans-serif"
     },
   },
@@ -15,10 +14,10 @@ const settings = {
     "margin" :{
       "top":30,
       "right":0,
-      "botton":30,
+      "bottom":30,
       "left":40
     },
-    "color":"steelblue",
+    "color":"#6699cc",
     "y_axis_format":"%",
   },
   "data_url":"./data/alphabet.csv" // It can also be a web address.
