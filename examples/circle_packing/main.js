@@ -3,11 +3,10 @@ import { gen_cpack } from './modules/cpack.mjs';
 
 const settings = {
   "html_layout": {
-    "title":"Circle Packing",  // The main HTML title.
+    "div_id": "#cpacking_chart", // the div id where you want to plug the chart.
     "svg": {
-      "id": "cpacking_chart",
-      "width":975,
-      "height":975,
+      "width":750,
+      "height":750,
       "font": "10px sans-serif"
     },
   },
