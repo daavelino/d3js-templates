@@ -3,23 +3,22 @@ import * as d3 from "https://cdn.skypack.dev/d3@7"
 
 function gen_cpack(settings) {
 
-  let svg_id = settings["html_layout"]["svg"]["id"];
-  let svg_width = settings["html_layout"]["svg"]["width"];
-  let svg_height = settings["html_layout"]["svg"]["height"];
+  let div_id = settings["html_layout"]["div_id"];
+  let width = settings["html_layout"]["svg"]["width"];
+  let height = settings["html_layout"]["svg"]["height"];
   let svg_font = settings["html_layout"]["svg"]["font"];
-  let html_title = settings["html_layout"]["title"]; 
   let data_url = settings["data_url"];
 
-  d3.select("title").text(html_title);
-
-  d3.select("#chart")
+  d3.select(div_id)
     .append("svg")
-    .attr("id",svg_id)
     .attr("text-anchor", "middle")
     .attr("preserveAspectRatio", "xMinYMin meet")
-    .attr("viewBox",[0, 0, svg_width, svg_height])
+    .attr("viewBox",[0, 0, width, height])
+    .style("max-width", width)
+    .style("max-height", height)
     .style("font", svg_font);
   
+  const svg = d3.select(div_id).select("svg");
 
   var count = 0;
   const uid = function(name) {
@@ -35,7 +34,6 @@ function gen_cpack(settings) {
       return "url(" + this.href + ")";
   };
 
-  const svg = d3.select(`#${svg_id}`);
 
   // Chart construction:
   d3.csv(data_url).then(function(data) {
@@ -54,10 +52,8 @@ function gen_cpack(settings) {
       d => d.action,
     );
 
-
-
     const pack = data => d3.pack()
-      .size([svg_width - 2, svg_height - 2])
+      .size([width - 2, height - 2])
       .padding(3)
       .radius(d => d.value + 50)
     (d3.hierarchy(rollup)

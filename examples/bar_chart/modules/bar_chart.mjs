@@ -21,16 +21,15 @@ function bar_chart(settings) {
  
   let data_url = settings["data_url"];
 
-  d3.select(div_id)
+  const div = d3.select(div_id)
     .append("svg")
-    .attr("id","svg_" + div_id)
-    .attr("width",width)
-    .attr("height",height)
     .attr("preserveAspectRatio", "xMinYMin meet")
     .attr("viewBox",[0, 0, width, height])
+    .style("max-width",width)
+    .style("max-height",height)
     .style("font", svg_font);
   
-  const svg = d3.select("svg");
+  const svg = d3.select(div_id).select("svg");
 
 
   // Chart construction:

@@ -3,25 +3,24 @@ import * as d3 from "https://cdn.skypack.dev/d3@7"
 
 function gen_icicle(settings) {
 
-  let svg_id = settings["html_layout"]["svg"]["id"];
-  let svg_width = settings["html_layout"]["svg"]["width"];
-  let svg_height = settings["html_layout"]["svg"]["height"];
+  let div_id = settings["html_layout"]["div_id"];
+  let width = settings["html_layout"]["svg"]["width"];
+  let height = settings["html_layout"]["svg"]["height"];
   let svg_font = settings["html_layout"]["svg"]["font"];
-  let html_title = settings["html_layout"]["title"]; 
   let rect_fill_opacity = settings["html_layout"]["rect"]["fill-opacity"];
   let tspan_fill_opacity = settings["html_layout"]["tspan"]["fill-opacity"];
   let data_url = settings["data_url"];
 
-  d3.select("title").text(html_title);
 
-  d3.select("#chart")
+  d3.select(div_id)
     .append("svg")
-    .attr("id",svg_id)
     .attr("preserveAspectRatio", "xMinYMin meet")
-    .attr("viewBox",[0, 0, svg_width, svg_height])
+    .attr("viewBox",[0, 0, width, height])
+    .style("max-width", width)
+    .style("max-height", height)
     .style("font", svg_font);
   
-  const svg = d3.select("svg");
+  const svg = d3.select(div_id).select("svg");
 
   // Chart construction:
   d3.json(data_url).then(function(data) {
@@ -31,7 +30,7 @@ function gen_icicle(settings) {
     const format = d3.format(",d");
 
     const partition = data => d3.partition()
-      .size([svg_height, svg_width])
+      .size([height, width])
       .padding(1)
       (d3.hierarchy(data)
         .sum(d => d.value)

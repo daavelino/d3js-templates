@@ -3,11 +3,10 @@ import { gen_icicle } from './modules/icicle.mjs';
 
 const settings = {
   "html_layout": {
-    "title":"Icicle",  // The main HTML title.
+    "div_id": "#icicle_chart", // the div id where you want to plug the chart.
     "svg": {
-      "id": "icicle_chart",
-      "width":975,
-      "height":600,
+      "width":600,
+      "height":400,
       "font": "10px sans-serif"
     },
     "tspan":{

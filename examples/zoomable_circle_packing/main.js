@@ -3,11 +3,10 @@ import { gen_zoom_cpack } from './modules/zoom_cpack.mjs';
 
 const settings = {
   "html_layout": {
-    "title":"Zoomable Circle Packing",  // The main HTML title.
+    "div_id": "#zoom_cpacking_chart", // the div id where you want to plug the chart.
     "svg": {
-      "id": "zoom_cpacking_chart",
-      "width":450,
-      "height":450,
+      "width":650,
+      "height":650,
       "font": "10px sans-serif"
     },
   },

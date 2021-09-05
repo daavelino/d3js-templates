@@ -3,26 +3,25 @@ import * as d3 from "https://cdn.skypack.dev/d3@7"
 
 function gen_zoom_cpack(settings) {
 
-  let svg_id = settings["html_layout"]["svg"]["id"];
-  let svg_width = settings["html_layout"]["svg"]["width"];
-  let svg_height = settings["html_layout"]["svg"]["height"];
+  let div_id = settings["html_layout"]["div_id"];
+  let width = settings["html_layout"]["svg"]["width"];
+  let height = settings["html_layout"]["svg"]["height"];
   let svg_font = settings["html_layout"]["svg"]["font"];
-  let html_title = settings["html_layout"]["title"]; 
   let data_url = settings["data_url"];
 
-  d3.select("title").text(html_title);
 
-  d3.select("#chart")
+  d3.select(div_id)
     .append("svg")
-    .attr("id",svg_id)
     .attr("preserveAspectRatio", "xMinYMin meet")
-    .attr("viewBox", [-svg_width / 2, -svg_height / 2, svg_width, svg_height])
+    .attr("viewBox", [-width / 2, -height / 2, width, height])
+    .style("max-width", width)
+    .style("max-height", height)
     .style("display", "block")
     .style("margin", "0 -14px")
     .style("cursor", "pointer")
     .style("font", svg_font);
 
-  const svg = d3.select(`#${svg_id}`);
+  const svg = d3.select(div_id).select("svg");
 
 
   // Chart construction:
@@ -36,7 +35,7 @@ function gen_zoom_cpack(settings) {
     const format = d3.format(",d");
   
     const pack = data => d3.pack()
-      .size([svg_width, svg_height])
+      .size([width, height])
       .padding(3)
     (d3.hierarchy(data)
       .sum(d => d.value)
@@ -94,7 +93,7 @@ function gen_zoom_cpack(settings) {
     }
   
     function zoomTo(v) {
-      const k = svg_width / v[2];
+      const k = width / v[2];
   
       view = v;
   

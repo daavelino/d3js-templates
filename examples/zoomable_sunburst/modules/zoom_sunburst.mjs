@@ -1,7 +1,7 @@
 import * as d3 from "https://cdn.skypack.dev/d3@7"
 
 
-function gen_sunburst(settings) {
+function gen_zoom_sunburst(settings) {
 
   let div_id = settings["html_layout"]["div_id"];
   let width = settings["html_layout"]["svg"]["width"];
@@ -34,18 +34,22 @@ function gen_sunburst(settings) {
       .startAngle(d => d.x0)
       .endAngle(d => d.x1)
       .padAngle(d => Math.min((d.x1 - d.x0) / 2, 0.005))
-      .padRadius(radius / 2)
-      .innerRadius(d => d.y0)
-      .outerRadius(d => d.y1 - 1);
+      .padRadius(radius * 1.5)
+      .innerRadius(d => d.y0 * radius)
+      .outerRadius(d => Math.max(d.y0 * radius, d.y1 * radius -1));
 
-    const partition = data => d3.partition()
-        .size([2 * Math.PI, radius])
-      (d3.hierarchy(data)
+    const partition = data => {
+      const root = d3.hierarchy(data)
         .sum(d => d.value)
-        .sort((a, b) => b.value - a.value))
-  
-    const root = partition(data);
+	.sort((a, b) => b.value - a.value);
+console.log(root)
+      return d3.partition()
+	.size([2 * Math.PI, root.height + 1])
+      (root);
+    } 
 
+    const root = partition(data);
+console.log(root)
     svg.append("g")
       .attr("fill-opacity", 0.6)
     .selectAll("path")
@@ -79,4 +83,4 @@ function gen_sunburst(settings) {
 
 }
 
-export { gen_sunburst };
+export { gen_zoom_sunburst };

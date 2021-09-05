@@ -3,9 +3,8 @@ import { gen_zoom_icicle } from './modules/zoom_icicle.mjs';
 
 var settings = {
   "html_layout": {
-    "title":"Zoomable Icicle",  // The main HTML title.
+    "div_id": "#zoom_icicle_chart", // the div id where you want to plug the chart.
     "svg": {
-      "id": "zoom_icicle_chart",
       "width":975,
       "height":600,
       "font": "10px sans-serif"

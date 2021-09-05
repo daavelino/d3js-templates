@@ -3,18 +3,11 @@ import { treemap } from './modules/treemap.mjs';
 
 const settings = {
   "html_layout": {
-    "title":"Treemap",  // The main HTML title.
+    "div_id": "#treemap_chart", // the div id where you want to plug the chart.
     "svg": {
-      "id": "treemap_chart",
       "width":975,
       "height":600,
       "font": "9px sans-serif"
-    },
-    "tspan":{
-      "opacity":0.7
-    },
-    "rect":{
-      "fill-opacity":0.6
     }
   },
   "data_url":"./data/flare-2.json" // It can also be a web address.
