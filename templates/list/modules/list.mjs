@@ -12,8 +12,7 @@ function list(settings) {
 
     const treemap = data => d3.treemap()
       (d3.hierarchy(data)
-          .sum(d => d.value)
-          .sort((a, b) => a.name)
+          .sort((a, b) => a.data.name.localeCompare(b.data.name))
       );
 
     const root = treemap(data);
