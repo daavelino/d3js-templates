@@ -21,3 +21,8 @@
 <p align="center">
   <img width="40%" src=".resources/img/sunburst.png">
 </p>
+
+# treemap chart
+<p align="center">
+  <img width="40%" src=".resources/img/treemap.png">
+</p>
