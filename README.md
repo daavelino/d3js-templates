@@ -4,5 +4,5 @@
 
 # Bar chart
 <p align="center">
-  <img width="40%" src=".resources/imgs/barchart.png">
+  <img width="40%" src=".resources/img/barchart.png">
 </p>
