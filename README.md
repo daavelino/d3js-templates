@@ -6,3 +6,8 @@
 <p align="center">
   <img width="40%" src=".resources/img/barchart.png">
 </p>
+
+# Circle packing chart
+<p align="center">
+  <img width="40%" src=".resources/img/circle_packing.png">
+</p>
