@@ -49,7 +49,7 @@ def run():
     result = flarify(hierarchy, "ROOT NODE")
 
     with open(output, "w", encoding="utf-8") as f:
-        json.dump(data, f)#, ensure_ascii=False, indent=4)
+        json.dump(result, f)#, ensure_ascii=False, indent=4)
 
     print(f"Done. Please check the flarified file at {output}.")
 
