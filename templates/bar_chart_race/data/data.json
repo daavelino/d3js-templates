@@ -1,0 +1,30 @@
+[
+  {
+    "year": 2020,
+    "values": [
+      { "name": "Name 1", "category": "Category 1", "value": 4 },
+      { "name": "Name 2", "category": "Category 2", "value": 20 },
+      { "name": "Name 3", "category": "Category 1", "value": 198 },
+      { "name": "Name 4", "category": "Category 3", "value": 0 }
+    ]
+  },
+  {
+    "year": 2021,
+    "values": [
+      { "name": "Name 1", "category": "Category 1", "value": 10 },
+      { "name": "Name 2", "category": "Category 2", "value": 15 },
+      { "name": "Name 3", "category": "Category 1", "value": 50 },
+      { "name": "Name 4", "category": "Category 3", "value": 8 }
+    ]
+  },
+  {
+    "year": 2022,
+    "values": [
+      { "name": "Name 1", "category": "Category 1", "value": 8 },
+      { "name": "Name 2", "category": "Category 2", "value": 25 },
+      { "name": "Name 3", "category": "Category 1", "value": 70 },
+      { "name": "Name 4", "category": "Category 3", "value": 12 }
+    ]
+  }
+]
+
