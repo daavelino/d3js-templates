@@ -1,26 +1,30 @@
 import * as d3 from "https://cdn.skypack.dev/d3@7"
 
 
-function gen_sunburst(settings) {
+function sunburst(settings) {
 
   let div_id = settings["html_layout"]["div_id"];
   let width = settings["html_layout"]["svg"]["width"];
   let height = settings["html_layout"]["svg"]["height"];
-  let svg_font = settings["html_layout"]["svg"]["font"];
+  let svg_id = settings["html_layout"]["svg"]["id"];
+  let svg_font_size = settings["html_layout"]["svg"]["font_size"];
+  let svg_font_type = settings["html_layout"]["svg"]["font_type"];
+  let svg_font = svg_font_size + "px " + svg_font_type;
   let data_url = settings["data_url"];
 
   let radius = Math.min(width, height) / 2;
   
 
-  d3.select(div_id)
+  d3.select("#" + div_id)
     .append("svg")
+    .attr("id", svg_id)
     .attr("preserveAspectRatio", "xMinYMin meet")
     .attr("viewBox",[0, 0, width, height])
     .style("max-width", width)
     .style("max-height", height)
     .style("font", svg_font);
   
-  const svg = d3.select(div_id).select("svg")
+  const svg = d3.select("#" + svg_id)
     .append("g").attr("transform",`translate(${width / 2}, ${height / 2})`);
 
   
@@ -79,4 +83,4 @@ function gen_sunburst(settings) {
 
 }
 
-export { gen_sunburst };
+export { sunburst };

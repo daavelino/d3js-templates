@@ -1,16 +1,20 @@
 import * as d3 from "https://cdn.skypack.dev/d3@7"
 
 
-function gen_cpack(settings) {
+function cpack(settings) {
 
   let div_id = settings["html_layout"]["div_id"];
   let width = settings["html_layout"]["svg"]["width"];
   let height = settings["html_layout"]["svg"]["height"];
-  let svg_font = settings["html_layout"]["svg"]["font"];
+  let svg_id = settings["html_layout"]["svg"]["id"];
+  let svg_font_size = settings["html_layout"]["svg"]["font_size"];
+  let svg_font_type = settings["html_layout"]["svg"]["font_type"];
+  let svg_font = svg_font_size + "px " + svg_font_type;
   let data_url = settings["data_url"];
 
-  const div = d3.select(div_id)
+  const div = d3.select("#" + div_id)
     .append("svg")
+    .attr("id", svg_id)
     .attr("text-anchor", "middle")
     .attr("preserveAspectRatio", "xMinYMin meet")
     .attr("viewBox",[0, 0, width, height])
@@ -18,7 +22,7 @@ function gen_cpack(settings) {
     .style("max-height", height)
     .style("font", svg_font);
   
-  const svg = d3.select(div_id).select("svg");
+  const svg = d3.select("#" + svg_id);
 
   var count = 0;
   const uid = function(name) {
@@ -40,7 +44,10 @@ function gen_cpack(settings) {
 
     const shadow = uid("shadow");
   
-    const color = d3.scaleSequential([6, 0], d3.interpolateMagma);
+    const color = d3.scaleSequential([50, 100], 
+                  d3.interpolateHclLong("white", "black")
+		);
+
     const format = d3.format(",d");
   
     const pack = data => d3.pack()
@@ -102,4 +109,4 @@ function gen_cpack(settings) {
 
 }
 
-export { gen_cpack };
+export { cpack };

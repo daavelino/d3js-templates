@@ -1,17 +1,21 @@
 import * as d3 from "https://cdn.skypack.dev/d3@7"
 
 
-function gen_zoom_cpack(settings) {
+function zoom_cpack(settings) {
 
   let div_id = settings["html_layout"]["div_id"];
   let width = settings["html_layout"]["svg"]["width"];
   let height = settings["html_layout"]["svg"]["height"];
-  let svg_font = settings["html_layout"]["svg"]["font"];
+  let svg_id = settings["html_layout"]["svg"]["id"];
+  let svg_font_size = settings["html_layout"]["svg"]["font_size"];
+  let svg_font_type = settings["html_layout"]["svg"]["font_type"];
+  let svg_font = svg_font_size + "px " + svg_font_type;
   let data_url = settings["data_url"];
 
 
-  d3.select(div_id)
+  d3.select("#" + div_id)
     .append("svg")
+    .attr("id", svg_id)
     .attr("preserveAspectRatio", "xMinYMin meet")
     .attr("viewBox", [-width / 2, -height / 2, width, height])
     .style("max-width", width)
@@ -21,7 +25,7 @@ function gen_zoom_cpack(settings) {
     .style("cursor", "pointer")
     .style("font", svg_font);
 
-  const svg = d3.select(div_id).select("svg");
+  const svg = d3.select("#" + svg_id);
 
 
   // Chart construction:
@@ -29,7 +33,7 @@ function gen_zoom_cpack(settings) {
 
     const color = d3.scaleLinear()
       .domain([0, 5])
-      .range(["hsl(152,80%,80%)", "hsl(228,30%,40%)"])
+      .range(["hsl(50,80%,80%)", "hsl(228,30%,40%)"])
       .interpolate(d3.interpolateHcl);
 
     const format = d3.format(",d");
@@ -108,5 +112,5 @@ function gen_zoom_cpack(settings) {
 
 }
 
-export { gen_zoom_cpack };
+export { zoom_cpack };
 

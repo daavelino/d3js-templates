@@ -1,13 +1,14 @@
-import * as d3 from "https://cdn.skypack.dev/d3@7";
-import { gen_icicle } from './modules/icicle.mjs';
+import { icicle } from './modules/icicle.mjs';
 
-const settings = {
+const settings_icicle = {
   "html_layout": {
-    "div_id": "#icicle_chart", // the div id where you want to plug the chart.
+    "div_id": "icicle_chart", // the div id where you want to plug the chart.
     "svg": {
-      "width":600,
-      "height":400,
-      "font": "10px sans-serif"
+      "id": "id" + self.crypto.randomUUID().replaceAll("-",""),
+      "width":768,
+      "height":768,
+      "font_type": "sans-serif",
+      "font_size": "8"
     },
     "tspan":{
       "opacity":0.7
@@ -16,9 +17,9 @@ const settings = {
       "fill-opacity":0.6
     }
   },
-  "data_url":"./data/flare-2.json" // It can also be a web address.
+  "data_url":"./data/data.json" // It can also be a web address.
 };
 
-gen_icicle(settings);
+icicle(settings_icicle);
 
 

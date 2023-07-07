@@ -6,19 +6,22 @@ function treemap(settings) {
   let div_id = settings["html_layout"]["div_id"];
   let width = settings["html_layout"]["svg"]["width"];
   let height = settings["html_layout"]["svg"]["height"];
-  let svg_font = settings["html_layout"]["svg"]["font"];
+  let svg_id = settings["html_layout"]["svg"]["id"];
+  let svg_font_size = settings["html_layout"]["svg"]["font_size"];
+  let svg_font_type = settings["html_layout"]["svg"]["font_type"];
+  let svg_font = svg_font_size + "px " + svg_font_type;
   let data_url = settings["data_url"];
 
 
-  d3.select(div_id)
+  d3.select("#" + div_id)
     .append("svg")
+    .attr("id", svg_id)
     .attr("preserveAspectRatio", "xMinYMin meet")
     .attr("viewBox",[0, 0, width, height])
     .style("max-width", width)
     .style("max-height", height)
     .style("font", svg_font);
  
-
   var count = 0;
   const uid = function(name) {
     return new Id("O-" + (name == null ? "" : name + "-") + ++count);
@@ -33,7 +36,7 @@ function treemap(settings) {
       return "url(" + this.href + ")";
   };
 
-  const svg = d3.select("svg");
+  const svg = d3.select("#" + svg_id);
 
   // Chart construction:
   d3.json(data_url).then(function(data) {
@@ -78,6 +81,8 @@ function treemap(settings) {
           .attr("fill-opacity", (d, i, nodes) => i === nodes.length - 1 ? 0.7 : null)
           .text(d => d);
 
+      leaf.append("title")
+          .text(d => `${d.ancestors().map(d => d.data.name).reverse().join("/")}\n${format(d.value)}`);
 
     return svg.node();
     

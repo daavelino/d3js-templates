@@ -1,18 +1,20 @@
-import * as d3 from "https://cdn.skypack.dev/d3@7";
 import { treemap } from './modules/treemap.mjs';
 
-const settings = {
+
+const settings_treemap = {
   "html_layout": {
-    "div_id": "#treemap_chart", // the div id where you want to plug the chart.
+    "div_id": "treemap_chart", // the div id where you want to plug the chart.
     "svg": {
+      "id": "id" + self.crypto.randomUUID().replaceAll("-",""),
       "width":975,
       "height":600,
-      "font": "9px sans-serif"
+      "font_type": "sans-serif",
+      "font_size": "8"
     }
   },
-  "data_url":"./data/flare-2.json" // It can also be a web address.
+  "data_url":"./data/data.json" // It can also be a web address.
 };
 
-treemap(settings);
+treemap(settings_treemap);
 
 

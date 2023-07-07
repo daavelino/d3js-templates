@@ -1,18 +1,19 @@
-import * as d3 from "https://cdn.skypack.dev/d3@7";
-import { gen_zoom_cpack } from './modules/zoom_cpack.mjs';
+import { zoom_cpack } from './modules/zoom_cpack.mjs';
 
-const settings = {
+const settings_cpack = {
   "html_layout": {
-    "div_id": "#zoom_cpacking_chart", // the div id where you want to plug the chart.
+    "div_id": "zoom_cpacking_chart", // the div id where you want to plug the chart.
     "svg": {
-      "width":650,
-      "height":650,
-      "font": "10px sans-serif"
+    "id": "id" + self.crypto.randomUUID().replaceAll("-",""),
+      "width":750,
+      "height":750,
+      "font_type": "sans-serif",
+      "font_size": "8"
     },
   },
-  "data_url":"./data/flare-2.json" // It can also be a web address.
+  "data_url":"./data/data.json"
 };
 
-gen_zoom_cpack(settings);
+zoom_cpack(settings_cpack);
 
 

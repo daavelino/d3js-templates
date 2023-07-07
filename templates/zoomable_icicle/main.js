@@ -1,24 +1,25 @@
-import * as d3 from "https://cdn.skypack.dev/d3@7";
-import { gen_zoom_icicle } from './modules/zoom_icicle.mjs';
+import { zoom_icicle } from './modules/zoom_icicle.mjs';
 
-var settings = {
+const settings_icicle = {
   "html_layout": {
-    "div_id": "#zoom_icicle_chart", // the div id where you want to plug the chart.
+    "div_id": "zoom_icicle_chart", // the div id where you want to plug the chart.
     "svg": {
-      "width":975,
-      "height":600,
-      "font": "10px sans-serif"
+      "id": "id" + self.crypto.randomUUID().replaceAll("-",""),
+      "width":768,
+      "height":768,
+      "font_type": "sans-serif",
+      "font_size": "8"
     },
     "tspan":{
-      "fill-opacity":0.7
+      "opacity":0.7
     },
     "rect":{
       "fill-opacity":0.6
     }
   },
-  "data_url":"./data/flare-2.json" // It can also be a web address.
+  "data_url":"./data/data.json" // It can also be a web address.
 };
 
-gen_zoom_icicle(settings);
+zoom_icicle(settings_icicle);
 
 
