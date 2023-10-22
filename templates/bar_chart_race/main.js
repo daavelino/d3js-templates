@@ -29,7 +29,7 @@ const settings_barrace = {
     "x_padding": 2,
     "year_font_type": "sans-serif",
     "year_font_size": 30,
-    "trans_duration": 1200,
+    "trans_duration": 600,
     "chart_speed": 2000,
   },
   "data_url":"./data/data.json" // It can also be a web address.

@@ -121,10 +121,11 @@ function barrace(settings) {
             return result;
 	}
 
-	const tmpData = sumStacked(yearValues);
+	var tmpData = sumStacked(yearValues);
 
         tmpData.sort((a, b) => d3.descending(a.total, b.total));
         const stackedData = tmpData.slice(0, max_bars + 1);
+	tmpData = null;
 
         xScale.domain([0, d3.max(stackedData, d => d.total)]);
         yScale.domain(stackedData.map(d => d.name));
