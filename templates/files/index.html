@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<title>SANKEY</title>
+<style>
+ 
+.node rect {
+  fill-opacity: .9;
+  shape-rendering: crispEdges;
+}
+ 
+.node text {
+  font-size: 10px;
+  font-family: "Verdana", sans-serif;
+  font-weight:"bold";
+  pointer-events: none;
+}
+ 
+.link {
+  fill: none;
+  stroke: #000;
+  stroke-opacity: .2;
+}
+ 
+.link:hover {
+  stroke-opacity: .5;
+}
+
+</style>
+<body>
+
+
+<p id="chart">
+ 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.9.0/d3.min.js"></script>
+<script src="sankey.js"></script>
+<script>
+
+
+const datafile = "./data/data.json";
+const units = "Unity";
+const margin_width = 1180;
+//const margin_height = 680;
+const margin_height = 540;
+//const margin_height = 1220;
+const node_width = 6;
+const node_padding = 10;
+const sankey_layout = 3200;
+const transition_duration = 300; //ms
+const rect_link_opacity = 0.5;
+
+var margin = {top: 10, right: 10, bottom: 10, left: 10},
+    width = margin_width - margin.left - margin.right,
+    height = margin_height - margin.top - margin.bottom;
+ 
+var formatNumber = d3.format(",.0f"),    // zero decimal places
+    format = function(d) { return formatNumber(d) + " " + units; };
+
+var scale_scheme = d3.schemeCategory10;
+//var scale_scheme = d3.schemeAccent;
+//var scale_scheme = d3.schemeDark2;
+//var scale_scheme = d3.schemeObservable10;
+//var scale_scheme = d3.schemePaired;
+//var scale_scheme = d3.schemePastel1;
+//var scale_scheme = d3.schemePastel2;
+//var scale_scheme = d3.schemeSet1;
+//var scale_scheme = d3.schemeSet2;
+//var scale_scheme = d3.schemeSet3;
+//var scale_scheme = d3.schemeTableau10;
+var color = d3.scaleOrdinal(scale_scheme);
+ 
+// append the svg canvas to the page
+var svg = d3.select("#chart").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", 
+          "translate(" + margin.left + "," + margin.top + ")");
+ 
+// Set the sankey diagram properties
+var sankey = d3.sankey()
+    .nodeWidth(node_width)
+    .nodePadding(node_padding)
+    .size([width, height]);
+
+var path = sankey.link();
+ 
+// load the data
+d3.json(datafile, function(error, graph) {
+    var nodeMap = {};
+    graph.nodes.forEach(function(x) { nodeMap[x.name] = x; });
+    graph.links = graph.links.map(function(x) {
+      return {
+        source: nodeMap[x.source],
+        target: nodeMap[x.target],
+        value: x.value
+      };
+    });
+ 
+  sankey
+      .nodes(graph.nodes)
+      .links(graph.links)
+      .layout(sankey_layout);
+ 
+// add in the links
+  var link = svg.append("g").selectAll(".link")
+      .data(graph.links)
+    .enter().append("path")
+      .attr("class", "link")
+      .attr("d", path)
+      .style("stroke-width", function(d) { return Math.max(1, d.dy); })
+      .sort(function(a, b) { return b.dy - a.dy; });
+ 
+// add the link titles
+  link.append("title")
+    .text(function(d) {
+     return d.source.name + " → " + 
+       d.target.name + "\n" + format(d.value); });
+ 
+// add in the nodes
+  var node = svg.append("g").selectAll(".node")
+      .data(graph.nodes)
+    .enter().append("g")
+      .attr("class", "node")
+      .attr("transform", function(d) { 
+        return "translate(" + d.x + "," + d.y + ")"; })
+    .call(d3.drag()
+      .on("start", function() {
+        this.parentNode.appendChild(this); })
+      .on("drag", dragmove));
+ 
+// add the rectangles for the nodes
+  node.append("rect")
+    .attr("height", function(d) { return d.dy; })
+    .attr("width", sankey.nodeWidth())
+    .style("fill", function(d) { 
+      return d.color = color(d.name.replace(/ .*/, "")); })
+    .style("stroke", function(d) { 
+      return d3.rgb(d.color).darker(2); })
+    .on("mouseover", function(d) {
+      link
+      .attr("class", "link")
+      .transition()
+      .duration(transition_duration)
+      .style("stroke-opacity", function(l) {
+        return l.source === d || l.target === d ? rect_link_opacity:null;
+      });
+    })
+    .on("mouseleave", function(d) {
+      link
+      .attr("class", "link")
+      .transition()
+      .duration(transition_duration)
+      .style("stroke-opacity", null);
+    })
+    .append("title")
+      .text(function(d) { 
+	  return d.name + "\n" + format(d.value); 
+      });
+ 
+// add in the title for the nodes
+  node.append("text")
+      .attr("x", -6)
+      .attr("y", function(d) { return d.dy / 2; })
+      .attr("dy", ".35em")
+      .attr("text-anchor", "end")
+      .attr("transform", null)
+      .text(function(d) { return d.name; })
+    .filter(function(d) { return d.x < width / 2; })
+      .attr("x", 6 + sankey.nodeWidth())
+      .attr("text-anchor", "start");
+
+// the function for moving the nodes
+  function dragmove(d) {
+    d3.select(this).attr("transform",
+      "translate(" + (
+        d.x = Math.max(0, Math.min(width - d.dx, d3.event.x))
+      ) + "," + (
+        d.y = Math.max(0, Math.min(height - d.dy, d3.event.y))
+      ) + ")");
+    sankey.relayout();
+    link.attr("d", path);
+  }
+
+
+});
+
+</script>
+ 
+</body>
+</html>

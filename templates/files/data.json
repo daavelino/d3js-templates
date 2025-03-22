@@ -1,0 +1,21 @@
+{
+    "links": [
+	{"source": "A", "target": "B", "value":3},
+	{"source": "A", "target": "C", "value":1},
+	{"source": "C", "target": "G", "value":1},
+	{"source": "B", "target": "D", "value":2},
+	{"source": "B", "target": "E", "value":1},
+	{"source": "E", "target": "F", "value":1},
+	{"source": "E", "target": "G", "value":1}
+
+    ],
+    "nodes": [
+        {"name": "A"},
+        {"name": "B"},
+        {"name": "C"},
+        {"name": "D"},
+        {"name": "E"},
+        {"name": "F"},
+        {"name": "G"}
+    ]
+}
